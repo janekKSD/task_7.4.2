@@ -24,6 +24,8 @@ class Series(Movie):
         super().__init__(*args, **kwargs)
         self.episode = episode
         self.season = season
+        #variables
+        self._available_episode = 0
 
     def __str__(self):
         return f'{self.title} \tS{self.season:02d}E{self.episode:02d}'
@@ -39,6 +41,12 @@ class Series(Movie):
             )
         )
 
+    def show_available_episode(self):
+        for _ in collection:
+            if _.title == self.title:
+                self._available_episode += 1
+        print(f'Biblioteka zawiera {self._available_episode} odcinków serialu {self.title}')
+    
 Reksio = Movie(title='Reksio', year=2000, genre='animated movie')
 Puchatek = Movie(title='Puchatek', year=2010, genre='animated movie')
 Krecik = Movie(title='Krecik', year=1970, genre='animated movie')
@@ -135,7 +143,7 @@ def print_top():
     print(f'\nNajpopularniejsze seriale dnia {now}:')
     top_titles(3)
 print_top()
-test = []
+
 def add_season(series):
     for _ in series:
         max_episode = _.episode
@@ -161,3 +169,6 @@ def add_season(series):
 
 add_season(series)
 print_collection()
+
+Friends.show_available_episode()
+Rowerem_przez_swiat.show_available_episode()
