@@ -28,6 +28,17 @@ class Series(Movie):
     def __str__(self):
         return f'{self.title} \tS{self.season:02d}E{self.episode:02d}'
 
+    def __eq__(self, other):
+        return all(
+            (
+            self.title == other.title,
+            self.year == other.year,
+            self.genre == other.genre,
+            self.episode == other.episode,
+            self.season == other.season
+            )
+        )
+
 Reksio = Movie(title='Reksio', year=2000, genre='animated movie')
 Puchatek = Movie(title='Puchatek', year=2010, genre='animated movie')
 Krecik = Movie(title='Krecik', year=1970, genre='animated movie')
@@ -36,12 +47,12 @@ Terminator = Movie(title='Terminator', year=1950, genre='action')
 Matrix = Movie(title='Matrix', year=2001, genre='action')
 #Reksio.play()
 
-Klan = Series(title='Klan', year=2000, genre='drama', episode=4, season=2)
-Friends = Series(title='Friends', year=1990, genre='musical', episode=1398, season=3)
-Zlotopolscy = Series(title='Zlotopolscy', year=2010, genre='drama', episode=4, season=2)
-Nocnik_krolewski = Series(title='Nocnik królewski', year=2003, genre='musical', episode=1398, season=3)
+Klan = Series(title='Klan', year=2000, genre='drama', episode=4, season=1)
+Friends = Series(title='Friends', year=1990, genre='musical', episode=5, season=1)
+Zlotopolscy = Series(title='Zlotopolscy', year=2010, genre='drama', episode=10, season=2)
+Nocnik_krolewski = Series(title='Nocnik królewski', year=2003, genre='musical', episode=8, season=3)
 Narty_na_plazy= Series(title='Narty na plazy', year=2022, genre='comedy', episode=4, season=2)
-Rowerem_przez_swiat = Series(title='Rowerem przez świat', year=1940, genre='drama', episode=1398, season=3)
+Rowerem_przez_swiat = Series(title='Rowerem przez świat', year=1940, genre='drama', episode=7, season=2)
 #Klan.play()
 
 collection = [Reksio, Puchatek, Krecik, Piła, Terminator, Matrix, Klan, Friends, Zlotopolscy, Nocnik_krolewski, Narty_na_plazy, Rowerem_przez_swiat]
@@ -124,3 +135,29 @@ def print_top():
     print(f'\nNajpopularniejsze seriale dnia {now}:')
     top_titles(3)
 print_top()
+test = []
+def add_season(series):
+    for _ in series:
+        max_episode = _.episode
+        max_season = _.season
+        title = _.title
+        year = _.year
+        genre = _.genre
+        number_season = 1
+        number_add_episode = 0
+        for new_season in range(max_season):
+            number_episode = 1
+            for new_episode in range(max_episode):
+                episode = Series(title=title, year=year, genre=genre, episode=number_episode, season=number_season)
+                if episode in series:
+                    pass
+                else:
+                    collection.append(episode)
+                    number_add_episode += 1
+                number_episode += 1
+            number_season += 1
+        print(f'Dodano {number_add_episode} odcinków serialu {_.title}')
+    get_series(collection)
+
+add_season(series)
+print_collection()
