@@ -42,39 +42,37 @@ class Series(Movie):
         )
 
     def show_available_episode(self):
-        for _ in collection:
-            if _.title == self.title:
+        for episode in collection:
+            if episode.title == self.title:
                 self._available_episode += 1
         print(f'Biblioteka zawiera {self._available_episode} odcinków serialu {self.title}')
     
-Reksio = Movie(title='Reksio', year=2000, genre='animated movie')
-Puchatek = Movie(title='Puchatek', year=2010, genre='animated movie')
-Krecik = Movie(title='Krecik', year=1970, genre='animated movie')
-Piła = Movie(title='Piła', year=2002, genre='horror')
-Terminator = Movie(title='Terminator', year=1950, genre='action')
-Matrix = Movie(title='Matrix', year=2001, genre='action')
-#Reksio.play()
+reksio = Movie(title='Reksio', year=2000, genre='animated movie')
+puchatek = Movie(title='Puchatek', year=2010, genre='animated movie')
+krecik = Movie(title='Krecik', year=1970, genre='animated movie')
+pila = Movie(title='Piła', year=2002, genre='horror')
+terminator = Movie(title='Terminator', year=1950, genre='action')
+matrix = Movie(title='Matrix', year=2001, genre='action')
+#reksio.play()
 
-Klan = Series(title='Klan', year=2000, genre='drama', episode=4, season=1)
-Friends = Series(title='Friends', year=1990, genre='musical', episode=5, season=1)
-Zlotopolscy = Series(title='Zlotopolscy', year=2010, genre='drama', episode=10, season=2)
-Nocnik_krolewski = Series(title='Nocnik królewski', year=2003, genre='musical', episode=8, season=3)
-Narty_na_plazy= Series(title='Narty na plazy', year=2022, genre='comedy', episode=4, season=2)
-Rowerem_przez_swiat = Series(title='Rowerem przez świat', year=1940, genre='drama', episode=7, season=2)
-#Klan.play()
+klan = Series(title='Klan', year=2000, genre='drama', episode=4, season=1)
+friends = Series(title='Friends', year=1990, genre='musical', episode=5, season=1)
+zlotopolscy = Series(title='Zlotopolscy', year=2010, genre='drama', episode=10, season=2)
+nocnik_krolewski = Series(title='Nocnik królewski', year=2003, genre='musical', episode=8, season=3)
+narty_na_plazy= Series(title='Narty na plazy', year=2022, genre='comedy', episode=4, season=2)
+rowerem_przez_swiat = Series(title='Rowerem przez świat', year=1940, genre='drama', episode=7, season=2)
+#klan.play()
 
-collection = [Reksio, Puchatek, Krecik, Piła, Terminator, Matrix, Klan, Friends, Zlotopolscy, Nocnik_krolewski, Narty_na_plazy, Rowerem_przez_swiat]
+collection = [reksio, puchatek, krecik, pila, terminator, matrix, klan, friends, zlotopolscy, nocnik_krolewski, narty_na_plazy, rowerem_przez_swiat]
 movies = []
 series = []
 
 def get_movies(collection):
     movies.clear()
     new_movies = []
-    for _ in collection:
-        if isinstance(_, Series): #jaka jest funkcja, która wykrywa konkretnie instancje danej klasy bez instancji utowrzonych z dziedziczonych klas??
-            pass
-        else:
-            new_movies.append(_)
+    for data in collection:
+        if type(data) == Movie:
+            new_movies.append(data)        
     new_movies = sorted(new_movies, key= lambda x:x.title)
     movies.extend(new_movies)
 #get_movies(collection)
@@ -82,18 +80,18 @@ def get_movies(collection):
 def get_series(collection):
     series.clear()
     new_movies =[]
-    for _ in collection:
-        if isinstance(_, Series):
-            new_movies.append(_)
+    for movie in collection:
+        if isinstance(movie, Series):
+            new_movies.append(movie)
     new_movies = sorted(new_movies, key=lambda x:x.title)
     series.extend(new_movies) 
 #get_series(collection)
 
 def search():
     title = input('Podaj tytuł filmu\n')
-    for _ in collection:
-        if _.title == title:
-            print(_)
+    for movie in collection:
+        if movie.title == title:
+            print(movie)
 #search()
 
 def generate_views(times):
@@ -112,25 +110,25 @@ def top_titles(content_type):
     #print('Top views:')
     if content_type == 1:
         top = sorted(collection, key=lambda x:-x.views)
-        for _ in range(times):
-            print(top[_].title, '\tviews: ', top[_].views)
+        for number in range(times):
+            print(top[number].title, '\tviews: ', top[number].views)
     elif content_type == 2:
         get_movies(collection)
         top = sorted(movies, key=lambda x:-x.views)
-        for _ in range(times):
-            print(top[_].title, '\tviews: ', top[_].views)
+        for number in range(times):
+            print(top[number].title, '\tviews: ', top[number].views)
     elif content_type == 3:
         get_series(collection)
         top = sorted(series, key=lambda x:-x.views)
-        for _ in range(times):
-            print(top[_].title, '\tviews ', top[_].views)
+        for number in range(times):
+            print(top[number].title, '\tviews ', top[number].views)
 #top_titles()
 
 def print_collection():
     print('\tBiblioteka filmów\n', 30*'_' )
     lp = 1
-    for _ in collection:
-        print('  ', lp, '\t.', _)
+    for data in collection:
+        print('  ', lp, '\t.', data)
         lp += 1
 print_collection()
 
@@ -145,12 +143,12 @@ def print_top():
 print_top()
 
 def add_season(series):
-    for _ in series:
-        max_episode = _.episode
-        max_season = _.season
-        title = _.title
-        year = _.year
-        genre = _.genre
+    for data in series:
+        max_episode = data.episode
+        max_season = data.season
+        title = data.title
+        year = data.year
+        genre = data.genre
         number_season = 1
         number_add_episode = 0
         for new_season in range(max_season):
@@ -164,11 +162,11 @@ def add_season(series):
                     number_add_episode += 1
                 number_episode += 1
             number_season += 1
-        print(f'Dodano {number_add_episode} odcinków serialu {_.title}')
+        print(f'Dodano {number_add_episode} odcinków serialu {data.title}')
     get_series(collection)
 
 add_season(series)
 print_collection()
 
-Friends.show_available_episode()
-Rowerem_przez_swiat.show_available_episode()
+friends.show_available_episode()
+rowerem_przez_swiat.show_available_episode()
