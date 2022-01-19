@@ -67,6 +67,24 @@ collection = [reksio, puchatek, krecik, pila, terminator, matrix, klan, friends,
 movies = []
 series = []
 
+def get_kind(collection, kind):
+    new_movies = []
+    if kind == 1:
+        movies.clear()
+        for data in collection:
+            if type(data) == Movie:
+                new_movies.append(data)        
+        new_movies = sorted(new_movies, key= lambda x:x.title)
+        movies.extend(new_movies)
+    elif kind == 2:
+        series.clear()
+        for movie in collection:
+            if isinstance(movie, Series):
+                new_movies.append(movie)
+        new_movies = sorted(new_movies, key=lambda x:x.title)
+        series.extend(new_movies)
+
+"""
 def get_movies(collection):
     movies.clear()
     new_movies = []
@@ -86,6 +104,7 @@ def get_series(collection):
     new_movies = sorted(new_movies, key=lambda x:x.title)
     series.extend(new_movies) 
 #get_series(collection)
+"""
 
 def search():
     title = input('Podaj tytuł filmu\n')
@@ -113,12 +132,12 @@ def top_titles(content_type):
         for number in range(times):
             print(top[number].title, '\tviews: ', top[number].views)
     elif content_type == 2:
-        get_movies(collection)
+        get_kind(collection, 1)
         top = sorted(movies, key=lambda x:-x.views)
         for number in range(times):
             print(top[number].title, '\tviews: ', top[number].views)
     elif content_type == 3:
-        get_series(collection)
+        get_kind(collection, 2)
         top = sorted(series, key=lambda x:-x.views)
         for number in range(times):
             print(top[number].title, '\tviews ', top[number].views)
@@ -151,9 +170,9 @@ def add_season(series):
         genre = data.genre
         number_season = 1
         number_add_episode = 0
-        for new_season in range(max_season):
+        for _ in range(max_season):
             number_episode = 1
-            for new_episode in range(max_episode):
+            for _ in range(max_episode):
                 episode = Series(title=title, year=year, genre=genre, episode=number_episode, season=number_season)
                 if episode in series:
                     pass
@@ -163,7 +182,7 @@ def add_season(series):
                 number_episode += 1
             number_season += 1
         print(f'Dodano {number_add_episode} odcinków serialu {data.title}')
-    get_series(collection)
+    get_kind(collection, 2)
 
 add_season(series)
 print_collection()
