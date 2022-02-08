@@ -53,7 +53,6 @@ krecik = Movie(title='Krecik', year=1970, genre='animated movie')
 pila = Movie(title='Piła', year=2002, genre='horror')
 terminator = Movie(title='Terminator', year=1950, genre='action')
 matrix = Movie(title='Matrix', year=2001, genre='action')
-#reksio.play()
 
 klan = Series(title='Klan', year=2000, genre='drama', episode=4, season=1)
 friends = Series(title='Friends', year=1990, genre='musical', episode=5, season=1)
@@ -61,7 +60,6 @@ zlotopolscy = Series(title='Zlotopolscy', year=2010, genre='drama', episode=10, 
 nocnik_krolewski = Series(title='Nocnik królewski', year=2003, genre='musical', episode=8, season=3)
 narty_na_plazy= Series(title='Narty na plazy', year=2022, genre='comedy', episode=4, season=2)
 rowerem_przez_swiat = Series(title='Rowerem przez świat', year=1940, genre='drama', episode=7, season=2)
-#klan.play()
 
 collection = [reksio, puchatek, krecik, pila, terminator, matrix, klan, friends, zlotopolscy, nocnik_krolewski, narty_na_plazy, rowerem_przez_swiat]
 movies = []
@@ -84,49 +82,21 @@ def get_kind(collection, kind):
         new_movies = sorted(new_movies, key=lambda x:x.title)
         series.extend(new_movies)
 
-"""
-def get_movies(collection):
-    movies.clear()
-    new_movies = []
-    for data in collection:
-        if type(data) == Movie:
-            new_movies.append(data)        
-    new_movies = sorted(new_movies, key= lambda x:x.title)
-    movies.extend(new_movies)
-#get_movies(collection)
-
-def get_series(collection):
-    series.clear()
-    new_movies =[]
-    for movie in collection:
-        if isinstance(movie, Series):
-            new_movies.append(movie)
-    new_movies = sorted(new_movies, key=lambda x:x.title)
-    series.extend(new_movies) 
-#get_series(collection)
-"""
-
 def search():
     title = input('Podaj tytuł filmu\n')
     for movie in collection:
         if movie.title == title:
             print(movie)
-#search()
+
 
 def generate_views(times):
     for _ in range(times):
         random_movie = random.randint(0, (len(collection) -1))
-        #print(collection[random_movie])
         random_views = random.randint(1, 100)
         collection[random_movie].views += random_views
-        #print(collection[random_movie].views)
-#generate_views(100)
 
 def top_titles(content_type):
-    #print('1 - Filmy i seriale\n2 - Filmy\n3- Seriale')
-    #content_type = int(input('Podaj zakres wyszukiwania filmów:\n'))
-    times = 3 #int(input('Podaj długość listy:\n'))
-    #print('Top views:')
+    times = 3
     if content_type == 1:
         top = sorted(collection, key=lambda x:-x.views)
         for number in range(times):
@@ -141,7 +111,6 @@ def top_titles(content_type):
         top = sorted(series, key=lambda x:-x.views)
         for number in range(times):
             print(top[number].title, '\tviews ', top[number].views)
-#top_titles()
 
 def print_collection():
     print('\tBiblioteka filmów\n', 30*'_' )
