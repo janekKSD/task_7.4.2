@@ -98,19 +98,19 @@ def generate_views(times):
 def top_titles(content_type):
     times = 3
     if content_type == 1:
-        top = sorted(collection, key=lambda x:-x.views)
+        collection.sort(key=lambda x: x.views, reverse=True)
         for number in range(times):
-            print(top[number].title, '\tviews: ', top[number].views)
+            print(collection[number].title, '\tviews: ', collection[number].views)
     elif content_type == 2:
         get_kind(collection, 1)
-        top = sorted(movies, key=lambda x:-x.views)
+        movies.sort(key=lambda x: x.views, reverse=True)
         for number in range(times):
-            print(top[number].title, '\tviews: ', top[number].views)
+            print(movies[number].title, '\tviews: ', movies[number].views)
     elif content_type == 3:
         get_kind(collection, 2)
-        top = sorted(series, key=lambda x:-x.views)
+        series.sort(key=lambda x: x.views, reverse=True)
         for number in range(times):
-            print(top[number].title, '\tviews ', top[number].views)
+            print(series[number].title, '\tviews ', series[number].views)
 
 def print_collection():
     print('\tBiblioteka filmów\n', 30*'_' )
